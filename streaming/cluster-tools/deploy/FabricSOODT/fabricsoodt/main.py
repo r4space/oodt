@@ -149,15 +149,13 @@ def main():
 		kservers = CLUSTER.getint('servers')
 		kreplication = CLUSTER.getint('replication')
 		kpartitions = CLUSTER.getint('partitions')
-		ZDIR=CLUSTER['ZDIR'].strip()
-		escZDIR=ZDIR.replace('/','\\/')
 		Knodes = CLUSTER['nodes'].split(',')
 		KNODES=[]
 		for i in Knodes: KNODES.append(i.strip(" "))
 
+		ZDIR=kconfig['ZOOKEEPER']['dataDir'].strip()
 		#Set $K_HOME remotely
 		K_HOME = appnames['kafka'][:-4]+"/"
-		print "K_HOME: ", K_HOME
 		execute(distribute.remoteSetVar,"K_HOME="+K_HOME,hosts=KNODES)
 		
 		#Check required destination folders exists and if not create it on remote nodes
@@ -172,7 +170,6 @@ def main():
 
 		#Setup Zookeeper config file
 		local("cp ../templates/zookeeper-template.properties ../templates/zookeeper.properties")
-		#local("sed -i \"12s/.*/dataDir=\\/tmp\\/zookeeper\\/data\\//\" ../templates/zoo.cfg")#Set Zookeeper data directory
 		local( "sed -i \"16s/.*/dataDir="+escZDIR+"/\" ../templates/zookeeper.properties")#Set Zookeeper data directory
 		server=0
 		for inode in Knodes:
