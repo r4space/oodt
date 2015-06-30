@@ -1,25 +1,24 @@
+from pystache import template_spec
+
+class ZK(template_spec.TemplateSpec):
 """ Zookeeper Config Pystache Class """
-class ZK(object):
 
-	def __init__ (self,DataDir="/tmp/zookeeper/data", Port=2181, maxClientCnxns=0,initLimit=5,syncLimit=2):
-		self.Port=Port
+	def __init__ (self,DataDir,nodes,zport):
 		self.DataDir=DataDir
-		self.maxClientCnxns=maxClientCnxns
-		self.initLimit=initLimit
-		self.syncLimit=syncLimit
-
+		self.nodes=nodes
+		self.zport=zport
+		self.template_rel_directory ="../templates/"
 
 	def DataDir(self):
 		return DataDir
 
-	def Port(self):
-		return Port
+	def servers(self):
+		servers=""
+		for i in range(len(self.nodes)):
+			servers = servers+"servers."+str(i)+"="+str(self.nodes[i])+":2888:3888\n"
+		return servers
 
-	def maxClientCnxns(self):
-		return maxClientCnxns
+	def zport(self):
+		return zport
 
-	def initLimit(self):
-		return initLimit
 
-	def syncLimit(self):
-		return syncLimit

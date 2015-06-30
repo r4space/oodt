@@ -42,11 +42,13 @@ if [[ ":$PATH:" == *"$HOME/.local/:"* ]]; then
 fi
 
 if [[ $2 == "install" ]]; then
-		python ../fabricsoodt/main.py $1
+		python ../main.py $1
+	#	python ../fabricsoodt/main.py $1
 		exit
 
 elif [[ $2 == "rebuild" ]]; then
-		python ../fabricsoodt/main.py $1 $3
+		python ../main.py $1 $3
+	#	python ../fabricsoodt/main.py $1 $3
 
 elif [[ $2 == "uninstall" ]]; then
 	echo "STILL  TO WRITE LOGGING and CLEANUP script"

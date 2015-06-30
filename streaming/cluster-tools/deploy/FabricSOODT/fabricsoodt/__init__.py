@@ -16,12 +16,16 @@ import setup
 #Check for: 
 #	fabric
 #	configparser
-if setup.uninstalled("fabric"):
-	setup.install("fabric")
-if setup.uninstalled("configparser"):
-	setup.install("configparser")
-#if setup.uninstalled("yaml"):
-#	setup.install("pyyaml")
+#	pystache
+
+if setup.python_uninstalled("fabric"):
+	setup.pip_install("fabric")
+
+if setup.python_uninstalled("configparser"):
+	setup.pip_install("configparser")
+
+if setup.python_uninstalled("pystache"):
+	setup.pip_install("pystache")
 
 
 

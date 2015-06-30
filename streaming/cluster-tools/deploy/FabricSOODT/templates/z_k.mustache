@@ -12,11 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+#### !!!!!!! NOTE: Do not edit parameters with values found in {{ }}, these wil be set by the install scripts and can be configured via the ../config/config.ini file !!!!!! 
+
 # the directory where the snapshot is stored.
 dataDir={{DataDir}}
 # the port at which the clients will connect
-clientPort={{Port}}
+clientPort={{zport}}
 # disable the per-ip limit on the number of connections since this is a non-production config
-maxClientCnxns={{maxClientCnxns}}
-initLimit={{initLimit}}
-syncLimit={{syncLimit}}
+maxClientCnxns=0
+initLimit=5
+syncLimit=2
+{{servers}}
