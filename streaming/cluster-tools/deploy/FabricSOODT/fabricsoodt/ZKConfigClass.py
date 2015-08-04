@@ -1,13 +1,13 @@
 from pystache import template_spec
 
 class ZK(template_spec.TemplateSpec):
-""" Zookeeper Config Pystache Class """
+	""" Zookeeper Config Pystache Class """
 
 	def __init__ (self,DataDir,nodes,zport):
 		self.DataDir=DataDir
 		self.nodes=nodes
 		self.zport=zport
-		self.template_rel_directory ="../templates/"
+		self.template_rel_directory ="templates/"
 
 	def DataDir(self):
 		return DataDir

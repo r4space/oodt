@@ -1,7 +1,7 @@
 from pystache import template_spec
 
 class KS(template_spec.TemplateSpec):
-""" Kafka Config Pystache Class """
+	""" Kafka Config Pystache Class """
 
 	def __init__ (self,ID,HostName,LogDir,nodes,zport):
 
@@ -10,7 +10,7 @@ class KS(template_spec.TemplateSpec):
 		self.LogDir=LogDir
 		self.nodes=nodes
 		self.zport=zport
-		self.template_rel_directory ="../templates/"
+		self.template_rel_directory ="templates/"
 
 	def ID(self):
 		return ID
@@ -24,8 +24,6 @@ class KS(template_spec.TemplateSpec):
 	def ZC(self):
 		zc=""
 		for node in self.nodes:
-			zc=zc+str(node)+":"+self.zport+","
+			zc=zc+str(node)+":"+str(self.zport)+","
 
-		zc=zc[:-1]
-		return zc
-
+		return zc[:-1]

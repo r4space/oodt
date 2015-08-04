@@ -1,32 +1,29 @@
-""" This package enables easy installatin of Streeming OODT accross a homogenous cluster 
+from __future__ import print_function
+import logging
+""" This package enables easy installation of Streeming OODT accross a homogenous cluster 
 
 Package depends on:
 	fabric 
+	configparser
+	pystache
 
-packge includes:
-	steup
+packge includes modules:
+	setup
 	building
 	distributing
 
 """
-#Local module imports
-import setup
+__all__ = ['setup','build','distribute']
+#Test availability of required nonStd external imports
+try:
+	import pystache
+	import configparser
+	import fabric
+#	from fabric.api import env, local, lcd 
+#	from fabric.contrib.files import exists
+#	from fabric.contrib.console import confirm
+#	from fabric.utils import abort
+except ImportError, e:
+	print("Error: {0}".format(e)) 
 
-#Check public modules are available for import
-#Check for: 
-#	fabric
-#	configparser
-#	pystache
-
-if setup.python_uninstalled("fabric"):
-	setup.pip_install("fabric")
-
-if setup.python_uninstalled("configparser"):
-	setup.pip_install("configparser")
-
-if setup.python_uninstalled("pystache"):
-	setup.pip_install("pystache")
-
-
-
-
+logger = logging.getLogger('foo').addHandler(logging.NullHandler())
