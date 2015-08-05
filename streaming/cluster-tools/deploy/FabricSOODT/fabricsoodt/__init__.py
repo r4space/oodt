@@ -13,7 +13,7 @@ packge includes modules:
 	distributing
 
 """
-__all__ = ['setup','build','distribute']
+__all__ = ['setup','build','distribute','operate']
 #Test availability of required nonStd external imports
 try:
 	import pystache

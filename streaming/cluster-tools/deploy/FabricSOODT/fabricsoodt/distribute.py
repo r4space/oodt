@@ -107,7 +107,7 @@ def configKafka(config):
 ###### Carriesd out on all nodes as defined by deploy execute call ######
 	#Set $K_HOME remotely
 	remoteSetVar("K_HOME="+config['HOME'])
-	logger.info("\n> Set K_HOME ={}".format(config['HOME'])
+	logger.info("\n> Set K_HOME ={}".format(config['HOME']))
 
 	#Check required destination folders exists and if not create on remote nodes
 	logger.info("\n> Checking for necessary Kafka directories {0}, {1}".format(config['zkdatadir'],config['logsdir']))

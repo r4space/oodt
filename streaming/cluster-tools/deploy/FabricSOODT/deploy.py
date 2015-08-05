@@ -10,11 +10,16 @@ import os
 import logging
 
 #Setup logging
+
 logger=logging.getLogger("fabricsoodt")
+logger.setLevel(logging.DEBUG)
+formatter=logging.Formatter("%(levelname)s:%(name)s:%(message)s")
 FH = logging.FileHandler('./logs/SOODTInstall.log','w')
 FH.setLevel(logging.DEBUG)
+FH.setFormatter(formatter)
 CH = logging.StreamHandler()
-CH.setLevel(logging.INFO)
+CH.setLevel(logging.DEBUG)
+CH.setFormatter(formatter)
 logger.addHandler(FH)
 logger.addHandler(CH)
 
@@ -48,9 +53,11 @@ elif not os.path.exists(sys.argv[2]):
 else:
 
 	if sys.argv[1].lower() == "install":
+		logger.info("> Begining install of SOODT")
 		fabricsoodt.operate.install()
 	
 	elif sys.argv[1].lower() == "clean":
+		logger.info("Cleaning SOODT install directories")
 		fabricsoodt.operate.clean()
 	
 	else:
