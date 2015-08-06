@@ -1,4 +1,5 @@
 from __future__ import with_statement
+''' Module containing function for the distribution of SOODT components and configurations '''
 
 import logging
 #Pystache Config file classes

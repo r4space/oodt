@@ -1,4 +1,4 @@
-''' Module containing clean() and install() '''
+''' Module containing clean(), install(). start(), stop() '''
 #External imports
 import logging
 import sys
@@ -11,6 +11,8 @@ import fabricsoodt
 import fabricsoodt.setup
 import fabricsoodt.build
 import fabricsoodt.distribute
+import fabricsoodt.start
+import fabricsoodt.stop
 
 logger = logging.getLogger('fabricssodt.operate')
 logging.getLogger("paramiko").setLevel(logging.WARNING)
@@ -21,6 +23,48 @@ def clean():
 	fabric.api.local("rm -r ./fabricsoodt/templates/myid")
 	fabric.api.local("rm -r ./fabricsoodt/templates/*.properties")
 	fabric.api.local("rm -r ./downloads/*")
+
+def start():
+	''' Start components based on config file requests and logical order '''
+	#Returns the contents of provided ini file as a dictionary of dictionaries
+	configuration = fabricsoodt.setup.readconfig(str(sys.argv[2]))
+	logger.info("\n> Reading configuration file: {0}".format(sys.argv[2]))
+
+
+	#Create an entry in configuration libraries contaning app specific IPs in a python list
+	for app in configuration:
+		if app == "CONFIGS" or app == "DEFAULT": continue
+		nodeIPs = map(lambda z: z.strip(" "), configuration[app]['nodes'].split(","))
+		configuration[app]['NODES']=nodeIPs 
+
+	if configuration['KAFKA']['start']:
+		logger.info("\n> Starting Kafka")
+		fabricsoodt.start.startupKafka(configuration['KAFKA'])
+
+#	if configuration['MESOS']['start']:
+#		logger.info("\n> Starting Mesos")
+#		fabricsoodt.start.startupMesos(configuration['MESOS'])
+
+def stop():
+	''' Stop components based on config file requests and logical order '''
+	#Returns the contents of provided ini file as a dictionary of dictionaries
+	configuration = fabricsoodt.setup.readconfig(str(sys.argv[2]))
+	logger.info("\n> Reading configuration file: {0}".format(sys.argv[2]))
+
+
+	#Create an entry in configuration libraries contaning app specific IPs in a python list
+	for app in configuration:
+		if app == "CONFIGS" or app == "DEFAULT": continue
+		nodeIPs = map(lambda z: z.strip(" "), configuration[app]['nodes'].split(","))
+		configuration[app]['NODES']=nodeIPs 
+
+	if not configuration['KAFKA']['start']:
+		logger.info("\n> Stopping Kafka")
+		fabricsoodt.stop.stopKafka(configuration['KAFKA'])
+
+#	if not configuration['MESOS']['start']:
+#		logger.info("\n> Stopping Mesos")
+#		fabricsoodt.stop.stopMesos(configuration['MESOS'])
 
 def install():
 # INITIALISATION 

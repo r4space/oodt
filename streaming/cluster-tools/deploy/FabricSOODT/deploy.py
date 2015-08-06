@@ -60,6 +60,14 @@ else:
 		logger.info("Cleaning SOODT install directories")
 		fabricsoodt.operate.clean()
 	
+	elif sys.argv[1].lower() =='start':
+		logger.info("Starting components")
+		fabricsoodt.operate.start()
+	
+	elif sys.argv[1].lower() =='stop':
+		logger.info("Stopping components")
+		fabricsoodt.operate.stop()
+	
 	else:
 		print("Error: Uncognised command")
 		print(usage_string)
