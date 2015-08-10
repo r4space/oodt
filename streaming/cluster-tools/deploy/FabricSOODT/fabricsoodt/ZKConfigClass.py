@@ -14,7 +14,7 @@ class ZK(template_spec.TemplateSpec):
 
 	def servers(self):
 		servers=""
-		for i in range(len(self.nodes)):
+		for i in range(1,len(self.nodes)+1):
 			servers = servers+"servers."+str(i)+"="+str(self.nodes[i])+":2888:3888\n"
 		return servers
 

@@ -119,7 +119,7 @@ def configKafka(config):
 	chmodFolder(config['HOME']+"/bin/", '-R a+x')
 	logger.info('\n> Added execute permisions to {}/bin'.format(config['HOME']))
 
-######	Carried on on local node and all indicated in calls made here #######
+######	Carried out on local node and all indicated in calls made here #######
 	#Setup and push Zookeeper config file
 	zk = fabricsoodt.ZKConfigClass.ZK(config['zkdatadir'],config['NODES'],config['zkport'])
 	zookeeperProperties = open("./fabricsoodt/templates/zookeeper.properties",'w')
@@ -131,7 +131,7 @@ def configKafka(config):
 	
 	
 	#Create and push myid file
-	for server in range(len(config['NODES'])):
+	for server in range(1,len(config['NODES'])+1):
 		fabric.api.local("echo {} > ./fabricsoodt/templates/myid".format(str(server)))
 		ret = fabric.api.put("./fabricsoodt/templates/myid", config['zkdatadir'], use_sudo=False)
 		if ret.failed and not fabric.contrib.console.confirm ("Something went wrong, continue anyways? "):
@@ -141,7 +141,7 @@ def configKafka(config):
 
 	#Setup and distribute unique Kafka config files
 	logger.info("\n> Creating and transferring Kafka configs")
-	for knode,k in zip(config['NODES'],range(len(config['NODES']))):
+	for knode,k in zip(config['NODES'],range(1,len(config['NODES'])+1)):
 		ks= fabricsoodt.KSConfigClass.KS(k,knode,config['logsdir'],config['NODES'],config['zkport'])
 		kafkaserverProperties = open("./fabricsoodt/templates/kafkaserver.properties",'w')
 		kafkaserverProperties.write(render.render(ks))
